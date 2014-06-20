@@ -6,7 +6,7 @@
 [alias]
     st = status
     cm = commit
-    cme = commit --allow-empty
+    cme = commit --allow-empty -m 'WIP commit'
     co = checkout
     graph = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
 [core]
