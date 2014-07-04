@@ -1,16 +1,19 @@
 [user]
-    name =
-    email =
+    name = matsushitar
+    email = star-oceans@abelia.ocn.ne.jp
 [credential]
     helper = osxkeychain
 [alias]
     st = status
     cm = commit
+    cmm = commit -m
     cme = commit --allow-empty -m 'WIP commit'
     co = checkout
     br = branch
     ba = branch -a
     bd = branch -d
+    po = push origin
+    rpo = remote prune origin
     graph = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
 [core]
     excludesfile = ~/.gitignore
