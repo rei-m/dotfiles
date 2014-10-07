@@ -54,8 +54,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/usr/local/mysql/bin:~/.rvm/scripts/rvm"
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -74,31 +72,69 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/loca
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-#java
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+#export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/usr/local/mysql/bin:~/.rvm/scripts/rvm"
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
+# git
+export PATH="$PATH:/usr/local/git/bin"
+# mysql
+export PATH="$PATH:/usr/local/mysql/bin"
+# Ruby
+export PATH="$PATH:$HOME/.rvm/bin"
+export PATH="$PATH:$HOME/.rvm/scripts/rvm"
+# Node.js
 export PATH=$HOME/.nodebrew/current/bin:$PATH
+# Go
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
+# Sublimeとか
+export PATH=$HOME/bin:$PATH
+
+#JAVA
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 # ビープを鳴らさない
 setopt nobeep
 
+# ディレクトリの履歴
+function peco-cdr () {
+    local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-cdr
+bindkey '^xr' peco-cdr
+
+# コマンドの履歴
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(\history -n 1 | \
+        eval $tac | \
+        peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
 # cdしたあとで、自動的に ls する
 function chpwd() { ls -1 }
-
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-max 5000
 zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
 
-source ~/zaw/zaw.zsh
-zstyle ':filter-select' case-insensitive yes
-# 絞り込みをcase-insensitiveに
-# bindkey '^@' zaw-cdr 
-# zaw-cdrをbindkey
-bindkey '^xb' zaw-cdr
-bindkey '^x^b' zaw-git-recent-branches
-bindkey '^x^f' zaw-git-files
-bindkey '^x^v' zaw-git-status
-bindkey '^x^r' zaw-history
+alias cdp='cd `ls | peco`'
+alias vimp='vim `ls -a | peco`'
