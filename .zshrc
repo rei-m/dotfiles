@@ -93,11 +93,14 @@ export PATH=$PATH:$GOPATH/bin
 # Sublimeとか
 export PATH=$HOME/bin:$PATH
 
+# ctagsのalias
+alias ctags="`brew --prefix`/bin/ctags"
+
 #JAVA
 export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 # ビープを鳴らさない
-setopt nobeep
+setopt no_beep
 
 # ディレクトリの履歴
 function peco-cdr () {
