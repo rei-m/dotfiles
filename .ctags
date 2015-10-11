@@ -1,3 +1,8 @@
+--append=yes
+--recurse=yes
+--html-kinds=af
+--ruby-kinds=cfm
+
 --langdef=js
 --langmap=js:.js
 --regex-js=/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*\{/\5/,object/

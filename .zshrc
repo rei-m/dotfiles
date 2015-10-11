@@ -72,7 +72,7 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-#export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/usr/local/mysql/bin:~/.rvm/scripts/rvm"
+#export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/usr/local/mysql/bin"
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 # git
@@ -80,8 +80,10 @@ export PATH="$PATH:/usr/local/git/bin"
 # mysql
 export PATH="$PATH:/usr/local/mysql/bin"
 # Ruby
-export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="$PATH:$HOME/.rvm/scripts/rvm"
+export RBENV_ROOT=$HOME/.rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+export PATH=$HOME/.rbenv/shims:$PATH
+
 # Node.js
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 # Go
